@@ -1,0 +1,10 @@
+# Exclude other large files
+api/static/uploaded_files/
+api/static/plots/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+api/venv/
