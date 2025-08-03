@@ -1,0 +1,27 @@
+{
+  "functions": {
+    "api/app.py": {
+      "runtime": "python3.9"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/app.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/ecg_frontend/$1"
+    }
+  ],
+  "builds": [
+    {
+      "src": "api/app.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "ecg_frontend/package.json",
+      "use": "@vercel/next"
+    }
+  ]
+}
