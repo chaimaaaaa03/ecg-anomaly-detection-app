@@ -1,13 +1,8 @@
+// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: '/api/:path*', // Proxy to Flask API
-      },
-    ];
-  },
-};
+  reactStrictMode: true,
+  // Supprimez temporairement d'autres configs pour tester
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
