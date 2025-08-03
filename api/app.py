@@ -221,11 +221,11 @@ def process_ecg_prediction(file, threshold, upload_folder='static/uploaded_files
         'is_anomaly': is_anomaly,
     }
 
-@app.route("/api/")
+@app.route("/")
 def home():
     return "ECG Anomaly Detection API"
 
-@app.route('/api/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login():
     print(current_user)
     data = request.get_json()
@@ -244,7 +244,7 @@ def login():
         return jsonify({'error': 'Invalid email or password'}), 401
 
 
-@app.route('/api/me', methods=['GET'])
+@app.route('/me', methods=['GET'])
 @login_required
 def get_current_user():
     return jsonify({
@@ -253,7 +253,7 @@ def get_current_user():
         'username': current_user.username,
     })
 
-@app.route('/api/check_session')
+@app.route('/check_session')
 @login_required
 def check_session():
     user=session.get('user', 'anonymous')
@@ -264,13 +264,13 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 
-@app.route('/api/logout', methods=['POST'])
+@app.route('/logout', methods=['POST'])
 @login_required
 def logout():
     logout_user()
     return jsonify({'message': 'Logged out'}), 200
 
-@app.route("/api/predict", methods=['GET', 'POST'])
+@app.route("/predict", methods=['GET', 'POST'])
 def predict():
     if request.method == 'POST':
         file = request.files['file']
@@ -289,7 +289,7 @@ def predict():
 
 #create ecg record
 @login_required
-@app.route('/api/patients/analyze/<id>', methods=['POST','GET'])
+@app.route('/patients/analyze/<id>', methods=['POST','GET'])
 def add_ecg_record(id):
     file = request.files['file']
     patient_id = id
@@ -314,7 +314,7 @@ def add_ecg_record(id):
 
 #gel all records
 @login_required
-@app.route("/api/ecg_records",methods=['GET'])
+@app.route("/ecg_records",methods=['GET'])
 def get_records():
     # Vérifier si l'utilisateur est un docteur (et pas admin)
     if current_user.is_admin:
@@ -333,7 +333,7 @@ def get_records():
 
 #admin gel all records
 @login_required
-@app.route("/api/admin/ecg_records",methods=['GET'])
+@app.route("/admin/ecg_records",methods=['GET'])
 def get_all_records():
     records = ECGRecord.query.order_by(ECGRecord.id.asc()).all()
     record_list = []
@@ -343,7 +343,7 @@ def get_all_records():
 
 #get patient by parametre
 @login_required
-@app.route("/api/ecg_records/search", methods=['GET'])
+@app.route("/ecg_records/search", methods=['GET'])
 def search_records():
     query = ECGRecord.query
     
@@ -376,7 +376,7 @@ def search_records():
 
 #delete record
 @login_required
-@app.route("/api/ecg_records/<id>",methods=['DELETE'])
+@app.route("/ecg_records/<id>",methods=['DELETE'])
 def delete_record(id):
     record = ECGRecord.query.filter_by(id=id).one()
     db.session.delete(record)
@@ -384,7 +384,7 @@ def delete_record(id):
     return f'Record id:{id} deleted!'
 
 #create doctor
-@app.route('/api/admin/doctors/add', methods=['POST'])
+@app.route('/admin/doctors/add', methods=['POST'])
 @login_required
 def create_doctor():
     if not current_user.is_admin:
@@ -411,7 +411,7 @@ def create_doctor():
 
 
 #get all doctors 
-@app.route('/api/admin/doctors', methods=['GET'])
+@app.route('/admin/doctors', methods=['GET'])
 @login_required
 def get_all_doctors():
     print(current_user)
@@ -424,7 +424,7 @@ def get_all_doctors():
     return {'doctors': doctors_list}
 
 #get a doctor 
-@app.route('/api/admin/doctors/<id>', methods=['GET'])
+@app.route('/admin/doctors/<id>', methods=['GET'])
 @login_required
 def get_doctor(id):
     if not current_user.is_admin:
@@ -434,7 +434,7 @@ def get_doctor(id):
     return {'doctor':format_doctor(doctor)}
 #get doctor by parametre
 @login_required
-@app.route("/api/admin/doctors/search", methods=['GET'])
+@app.route("/admin/doctors/search", methods=['GET'])
 def search_doctors():
     if not current_user.is_admin:
         return jsonify({'error': 'Access forbidden'}), 403
@@ -456,7 +456,7 @@ def search_doctors():
 
 #delete doctor
 @login_required
-@app.route("/api/admin/doctors/<id>", methods=['DELETE'])
+@app.route("/admin/doctors/<id>", methods=['DELETE'])
 def delete_doctor(id):
     
     if not current_user.is_admin:
@@ -475,7 +475,7 @@ def delete_doctor(id):
 
 #edit_a_doctor
 @login_required
-@app.route("/api/admin/doctors/update/<id>", methods=['PUT'])
+@app.route("/admin/doctors/update/<id>", methods=['PUT'])
 def update_doctor(id):
     if not current_user.is_admin :
         return jsonify({'error': 'Access forbidden'}), 403
@@ -502,7 +502,7 @@ def update_doctor(id):
     db.session.commit()
     return jsonify({"message": f"Doctor {id} updated successfully"}), 200
 
-@app.route("/api/admin/doctors/change-password/<int:doctor_id>", methods=["PUT"])
+@app.route("/admin/doctors/change-password/<int:doctor_id>", methods=["PUT"])
 @login_required
 def admin_change_doctor_password(doctor_id):
     if not current_user.is_admin:
@@ -523,7 +523,7 @@ def admin_change_doctor_password(doctor_id):
 
 #create_patient
 @login_required
-@app.route("/api/patients/add",methods=['POST'])
+@app.route("/patients/add",methods=['POST'])
 def create_patient() :
     data = request.get_json()
         # Required fields check
@@ -570,7 +570,7 @@ def create_patient() :
 
 #admin get all patient
 @login_required
-@app.route("/api/admin/patients",methods=['GET'])
+@app.route("/admin/patients",methods=['GET'])
 def get_all_patients():
     patients = Patients.query.order_by(Patients.id.asc()).all()
     patient_list = []
@@ -580,7 +580,7 @@ def get_all_patients():
 
 #get all patient
 @login_required
-@app.route("/api/patients",methods=['GET'])
+@app.route("/patients",methods=['GET'])
 def get_patients():
     print(current_user)
     doctor_id=current_user.id
@@ -592,7 +592,7 @@ def get_patients():
 
 #get a patient
 @login_required
-@app.route("/api/patients/<id>",methods=['GET'])
+@app.route("/patients/<id>",methods=['GET'])
 def get_patient(id):
     patient = Patients.query.filter_by(id=id).one()
 
@@ -600,7 +600,7 @@ def get_patient(id):
 
 #get patient by parametre
 @login_required
-@app.route("/api/patients/search", methods=['GET'])
+@app.route("/patients/search", methods=['GET'])
 def search_patients():
     query = Patients.query
 
@@ -636,7 +636,7 @@ def search_patients():
 
 #delete patient
 @login_required
-@app.route("/api/patients/<id>",methods=['DELETE'])
+@app.route("/patients/<id>",methods=['DELETE'])
 def delete_patient(id):
     patient = Patients.query.filter_by(id=id).one()
     db.session.delete(patient)
@@ -645,7 +645,7 @@ def delete_patient(id):
 
 #edit_a_patient
 @login_required
-@app.route("/api/patients/update/<id>", methods=["PUT"])
+@app.route("/patients/update/<id>", methods=["PUT"])
 def update_patient(id):
     patient = Patients.query.filter_by(id=id).first()
 
