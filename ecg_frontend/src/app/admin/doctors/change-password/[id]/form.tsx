@@ -39,8 +39,10 @@ export default function UpdatePassFormPage() {
     });
 
   async function onSubmit(data: z.infer<typeof newPassSchema>) {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
     
-        const response = await fetch(`/api/admin/doctors/change-password/${id}`, {
+        const response = await fetch(`${API_URL}/api/admin/doctors/change-password/${id}`, {
         method: "PUT" , 
         headers: {
             "Content-Type": "application/json",

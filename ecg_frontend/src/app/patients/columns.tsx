@@ -46,9 +46,9 @@ function ActionsCell({
     const confirmed = window.confirm(`Are you sure you want to delete patient "${patient.name}"?`);
     if (!confirmed)  return
     
-
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
     try {
-      const res = await fetch(`/api/patients/${patient.id}`, {
+      const res = await fetch(`${API_URL}/api/patients/${patient.id}`, {
         method: "DELETE",
         credentials: "include",
       });

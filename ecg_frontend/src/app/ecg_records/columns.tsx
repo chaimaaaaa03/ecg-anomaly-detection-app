@@ -51,9 +51,9 @@ function ActionsCell({
     const confirmed = window.confirm(`Are you sure you want to delete?`);
     if (!confirmed)  return
     
-
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
     try {
-      const res = await fetch(`/api/ecg_records/${record.id}`, {
+      const res = await fetch(`${API_URL}/api/ecg_records/${record.id}`, {
         method: "DELETE",
         credentials: "include",
       });

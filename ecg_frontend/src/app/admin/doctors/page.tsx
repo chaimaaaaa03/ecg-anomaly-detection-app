@@ -12,8 +12,10 @@ export default function DoctorsList() {
 
   useEffect(() => {
     const fetchDoctors = async () => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
       try {
-        const res = await fetch("/api/admin/doctors", {
+        const res = await fetch(`${API_URL}/api/admin/doctors`, {
         credentials: "include", // Important
       });
     

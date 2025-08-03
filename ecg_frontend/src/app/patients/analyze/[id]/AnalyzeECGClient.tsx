@@ -22,9 +22,10 @@ export default function AnalyzeECGClient({ patientId }: { patientId: string }) {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("patient_id", patientId);
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
     try {
-      const res = await fetch(`/api/patients/analyze/${patientId}` , {
+      const res = await fetch(`${API_URL}/api/patients/analyze/${patientId}` , {
         method: "POST",
         credentials: "include",
         body: formData,

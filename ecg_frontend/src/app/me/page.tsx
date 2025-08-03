@@ -14,8 +14,9 @@ export default function MePage() {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
       try {
-        const res = await fetch("/api/me", {
+        const res = await fetch(`${API_URL}/api/me`, {
           credentials: "include", 
         });
 

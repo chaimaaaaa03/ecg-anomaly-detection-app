@@ -69,7 +69,8 @@ export default function UpdatePatientFormPage() {
   // Get existing patient data
   useEffect(() => {
   async function fetchData() {
-    const res = await fetch(`/api/patients/${id}`, {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const res = await fetch(`${API_URL}/api/patients/${id}`, {
       credentials: "include",
     });
 
@@ -122,8 +123,8 @@ export default function UpdatePatientFormPage() {
     }
 
 
-    
-        const response = await fetch(`/api/patients/update/${id}`, {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const response = await fetch(`${API_URL}/api/patients/update/${id}`, {
         method: "PUT", // ou PUT/PATCH si ton backend accepte
         headers: {
             "Content-Type": "application/json",

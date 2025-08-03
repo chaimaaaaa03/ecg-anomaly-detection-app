@@ -44,11 +44,12 @@ export default function UpdateDoctorFormPage() {
           password: "",
       },
     });
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
   
   // Get existing doctor data
   useEffect(() => {
   async function fetchData() {
-    const res = await fetch(`/api/admin/doctors/${id}`, {
+    const res = await fetch(`${API_URL}/api/admin/doctors/${id}`, {
       credentials: "include",
     });
 
@@ -75,7 +76,7 @@ export default function UpdateDoctorFormPage() {
 
   async function onSubmit(data: z.infer<typeof newDoctorSchema>) {
     
-        const response = await fetch(`/api/admin/doctors/update/${id}`, {
+        const response = await fetch(`${API_URL}/api/admin/doctors/update/${id}`, {
         method: "PUT" , 
         headers: {
             "Content-Type": "application/json",

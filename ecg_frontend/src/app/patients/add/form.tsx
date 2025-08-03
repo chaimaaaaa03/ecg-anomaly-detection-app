@@ -95,9 +95,10 @@ export default function NewPatientFormPage() {
     phone: data.phone,
     address: data.address, // facultatif ou null
   };
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
   try {
-    const res = await fetch("/api/patients/add", {
+    const res = await fetch(`${API_URL}/api/patients/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

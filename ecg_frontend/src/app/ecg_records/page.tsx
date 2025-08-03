@@ -13,8 +13,9 @@ export default function RecordsList() {
 
   useEffect(() => {
     const fetchRecords = async () => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
       try {
-        const res = await fetch("/api/ecg_records",{
+        const res = await fetch(`${API_URL}/api/ecg_records`,{
           credentials: "include",
         });
         

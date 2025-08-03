@@ -38,9 +38,11 @@ function ActionsCell({
 }) {
     const router = useRouter();
   const handleDelete = async () => {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
 
     try {
-      const res = await fetch(`/api/admin/doctors/${doctor.id}`, {
+      const res = await fetch(`${API_URL}/api/admin/doctors/${doctor.id}`, {
         method: "DELETE",
         credentials: "include",
       });
