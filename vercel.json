@@ -1,27 +1,22 @@
 {
-  "functions": {
-    "api/app.py": {
-      "runtime": "python3.9"
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/app.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/ecg_frontend/$1"
-    }
-  ],
   "builds": [
     {
       "src": "ecg_frontend/package.json",
       "use": "@vercel/next"
     },
     {
-      "src": "api/app.py",
+      "src": "api/*.py",
       "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/ecg_frontend/$1"
     }
   ]
 }
